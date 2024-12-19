@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skumle Bilder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #cat-container {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Pass på det er veldig skummel!!!</h1>
+    <button id="loadCats">Klikk Her!</button>
+  <h5>Copyright © 2024 Muhammed</h5>
+    <div id="cat-container"></div>
+
+    <script>
+        document.getElementById("loadCats").addEventListener("click", () => {
+            const catContainer = document.getElementById("cat-container");
+
+            // Hent tilfeldige kattbilder
+            for (let i = 0; i < 3; i++) {
+                fetch("https://api.thecatapi.com/v1/images/search")
+                    .then(response => response.json())
+                    .then(data => {
+                        const img = document.createElement("img");
+                        img.src = data[0].url; // Hent kattbildets URL
+                        img.alt = "Kattbilde";
+                        catContainer.appendChild(img);
+                    })
+                    .catch(error => console.error("En feil oppstod under henting av kattbilder:", error));
+            }
+        });
+    </script>
+</body>
+</html>

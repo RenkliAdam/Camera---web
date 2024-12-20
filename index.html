@@ -1,73 +1,77 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skumle Bilder</title>
+    <title>Jumpscare Crazy Games</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
-            padding: 20px;
-            background-color: #000000;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
         }
-        h1 {
-            color: #fff;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
+
+        iframe {
+            width: 80%;
+            height: 80%;
             border: none;
-            background-color: #ed6921;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
         }
-        button:hover {
-            background-color: #d05c1a;
-        }
-        #cat-container {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        img {
+
+        #jumpscare {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            height: 100%;
+            background-color: black;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
-        h5 {
-            color: #ccc;
-            font-size: 14px;
+
+        #jumpscare img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #jumpscare h1 {
+            color: red;
+            font-size: 50px;
             margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Husk å peke skjermen vekk fra andre</h1>
-    <button id="loadCats">https://pornhub.com</button>
-    <h5>Copyright © 2024 rekliadam</h5>
-    <div id="cat-container"></div>
+    <iframe src="https://www.crazygames.com/" id="game-frame"></iframe>
+
+    <div id="jumpscare">
+        <img src="https://i.imgur.com/3b1ZVvJ.png" alt="Scary Face">
+        <h1>AHHHH!</h1>
+    </div>
 
     <script>
-        document.getElementById("loadCats").addEventListener("click", () => {
-            const catContainer = document.getElementById("cat-container");
+        // Jumpscare mekanizması
+        const jumpscare = document.getElementById("jumpscare");
 
-            // Hent tilfeldige kattbilder
-            for (let i = 0; i <18; i++) {
-                fetch("https://api.thecatapi.com/v1/images/search")
-                    .then(response => response.json())
-                    .then(data => {
-                        const img = document.createElement("img");
-                        img.src = data[0].url; // Hent kattbildets URL
-                        img.alt = "Kattbilde";
-                        catContainer.appendChild(img);
-                    })
-                    .catch(error => console.error("En feil oppstod under henting av kattbilder:", error));
-            }
-        });
+        // Rastgele bir zaman (örneğin 10-30 saniye arası) seçiliyor
+        const randomTime = Math.random() * 20000 + 10000; // 10-30 saniye
+
+        setTimeout(() => {
+            jumpscare.style.display = "flex";
+            setTimeout(() => {
+                alert("Korktun mu? Oyuna dönmek için sayfayı yenileyin.");
+                location.reload();
+            }, 2000); // 2 saniye sonra yeniden yükleme
+        }, randomTime);
     </script>
 </body>
 </html>
+

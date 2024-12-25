@@ -3,50 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telefon Kamerasından Yayın</title>
+  <title>Hammode</title>
   <style>
-    video {
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .chat-container {
       width: 100%;
-      max-width: 500px;
-      border: 2px solid #000;
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #6200ea;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    .chat-box {
+      padding: 20px;
+      height: 400px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ddd;
+    }
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    .chat-input button {
+      padding: 10px 20px;
+      background: #6200ea;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .chat-input button:hover {
+      background: #4b00c6;
+    }
+    .message {
+      margin-bottom: 15px;
+    }
+    .message.user {
+      text-align: right;
+      color: #6200ea;
+    }
+    .message.bot {
+      text-align: left;
+      color: #333;
+    }
+    .teach-section {
+      padding: 10px;
+      background: #e9ecef;
+      display: flex;
+      gap: 10px;
+    }
+    .teach-section input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      flex: 1;
     }
   </style>
 </head>
 <body>
-  <h1>Telefon Kamerasından Yayın</h1>
-  <video id="video" autoplay></video>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1>Hammode Chatbot</h1>
+    </div>
+    <div class="chat-box" id="chat-box">
+      <!-- Messages will appear here -->
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Skriv Her...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+    <div class="teach-section">
+      <input type="text" id="teach-input" placeholder="Spør han...">
+      <input type="text" id="response-input" placeholder="Lær han...">
+      <button onclick="teachBot()">Lær Hammode</button>
+    </div>
+  </div>
 
   <script>
-    const videoElement = document.getElementById('video');
-    const peerConnection = new RTCPeerConnection();
-
-    // Telefon tarafından gönderilen "offer" burada alınacak
-    const offerInput = prompt("Telefon tarafından gönderilen offer mesajını buraya yapıştırın:");
-    const offer = JSON.parse(offerInput);
-
-    // Offer'ı al ve bağlantıyı kur
-    peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
-      .then(() => peerConnection.createAnswer())
-      .then(answer => peerConnection.setLocalDescription(answer))
-      .then(() => {
-        // Answer'ı telefon tarafına gönder
-        alert("Answer mesajı oluşturuldu. Lütfen telefon tarafına kopyalayıp yapıştırın.");
-        console.log("Answer mesajı: ", peerConnection.localDescription);
-      });
-
-    // Video akışını göster
-    peerConnection.ontrack = (event) => {
-      videoElement.srcObject = event.streams[0];
+    // Chatbot'un öğrendiği verileri tutan nesne
+    const knowledgeBase = {
+      "merhaba": "Selam!",
+      "nasılsın": "İyiyim, teşekkürler! Sen nasılsın?"
     };
 
-    peerConnection.onicecandidate = (event) => {
-      if (event.candidate) {
-        console.log("ICE Candidate: ", event.candidate);
-        // ICE Candidate bilgisini telefon tarafına gönder
+    // Mesaj gönderme fonksiyonu
+    function sendMessage() {
+      const userInput = document.getElementById("user-input").value.toLowerCase();
+      const chatBox = document.getElementById("chat-box");
+
+      // Kullanıcı mesajını göster
+      if (userInput.trim() === "") return;
+      chatBox.innerHTML += `<div class="message user"><b>Du:</b> ${userInput}</div>`;
+      document.getElementById("user-input").value = "";
+
+      // Bot yanıtı
+      const botResponse = knowledgeBase[userInput] || "Bunu bilmiyorum. Bana öğretebilirsin!";
+      chatBox.innerHTML += `<div class="message bot"><b>Hammode:</b> ${botResponse}</div>`;
+
+      // Otomatik kaydırma
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Botu öğretme fonksiyonu
+    function teachBot() {
+      const teachInput = document.getElementById("teach-input").value.toLowerCase();
+      const responseInput = document.getElementById("response-input").value;
+
+      if (teachInput.trim() === "" || responseInput.trim() === "") {
+        alert("Hem soru hem de cevap doldurulmalı!");
+        return;
       }
-    };
+
+      // Bilgi tabanına yeni bilgi ekle
+      knowledgeBase[teachInput] = responseInput;
+      alert(`"${teachInput}" öğretilerek, "${responseInput}" yanıtı kaydedildi!`);
+
+      // Alanları temizle
+      document.getElementById("teach-input").value = "";
+      document.getElementById("response-input").value = "";
+    }
   </script>
 </body>
 </html>
-
-

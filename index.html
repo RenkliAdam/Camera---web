@@ -3,47 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telefon Kamerası Görüntü Paylaşımı</title>
+  <title>Canlı Yayın - Bilgisayar</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
+      text-align: center;
+      padding: 20px;
     }
     video {
-      width: 90%;
-      max-width: 600px;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      width: 100%;
+      max-width: 500px;
+      border: 2px solid #000;
     }
   </style>
 </head>
 <body>
-  <h1>Telefon Kamerası Yayını</h1>
-  <video id="video" autoplay playsinline></video>
+  <h1>Telefon Kamerasından Yayın</h1>
+  <video id="video" autoplay></video>
 
   <script>
-    // Telefon kamerasına erişim
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        const videoElement = document.getElementById('video');
-        videoElement.srcObject = stream;
+    const videoElement = document.getElementById('video');
+    const peerConnection = new RTCPeerConnection();
 
-        // Kamerayı başlat
-        videoElement.play();
-      })
-      .catch((err) => {
-        console.error('Kameraya erişilemedi:', err);
-        alert('Telefon kameranıza erişim başarısız oldu!');
+    // WebRTC bağlantısı kurmak için sinyal verisi alınacak
+    // Örneğin, telefon tarafından gönderilen "offer" burada alınacak
+    const offer = {/* Telefon tarafından gönderilen offer objesi burada olmalı */};
+
+    peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
+      .then(() => peerConnection.createAnswer())
+      .then(answer => peerConnection.setLocalDescription(answer))
+      .then(() => {
+        // WebRTC sinyalini telefon tarafına gönder
+        console.log("WebRTC Answer gönderildi.");
       });
+
+    peerConnection.ontrack = (event) => {
+      // Telefonun kamerasından gelen görüntü
+      videoElement.srcObject = event.streams[0];
+    };
+
+    peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        console.log("ICE Candidate: ", event.candidate);
+        // ICE Candidate bilgisini telefona gönder
+      }
+    };
   </script>
 </body>
 </html>
-
-

@@ -101,8 +101,8 @@
   </div>
 
   <script>
-    // Chatbot'un öğrendiği verileri tutan nesne
-    const knowledgeBase = {
+    // localStorage'dan botun öğrendiği verileri al veya boş bir nesne oluştur
+    let knowledgeBase = JSON.parse(localStorage.getItem('knowledgeBase')) || {
       "merhaba": "Selam!",
       "nasılsın": "İyiyim, teşekkürler! Sen nasılsın?"
     };
@@ -135,8 +135,12 @@
         return;
       }
 
-      // Bilgi tabanına yeni bilgi ekle
+      // Yeni bilgi ekle
       knowledgeBase[teachInput] = responseInput;
+
+      // Yeni bilgiyi localStorage'a kaydet
+      localStorage.setItem('knowledgeBase', JSON.stringify(knowledgeBase));
+
       alert(`"${teachInput}" öğretilerek, "${responseInput}" yanıtı kaydedildi!`);
 
       // Alanları temizle
@@ -146,3 +150,4 @@
   </script>
 </body>
 </html>
+

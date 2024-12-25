@@ -1,0 +1,197 @@
+/* Genel Stil Ayarları */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #00627b;
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+header nav ul li a {
+    color: white;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #ffb300;
+}
+
+header .login-btn {
+    background-color: #ffb300;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+}
+
+header .login-btn:hover {
+    background-color: #e68900;
+}
+
+/* Hero Section */
+.hero {
+    background: url('https://via.placeholder.com/1920x800') no-repeat center center/cover;
+    color: black;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero-content h2 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.4em;
+    margin-bottom: 30px;
+}
+
+.cta-btn {
+    background-color: #00bcd4;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: black;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #0097a7;
+}
+
+/* Services Section */
+.services {
+    background-color: #ffffff;
+    padding: 60px 20px;
+}
+
+.services .container {
+    text-align: center;
+}
+
+.service-item {
+    background-color: #f5f5f5;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover {
+    transform: translateY(-10px);
+}
+
+.service-item h3 {
+    font-size: 2.2em;
+    color: #00627b;
+    margin-bottom: 20px;
+}
+
+.service-item p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* About Section */
+.about {
+    background-color: #f9f9f9;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.about h2 {
+    font-size: 2.5em;
+    color: #00627b;
+    margin-bottom: 30px;
+}
+
+.about p {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Contact Section */
+.contact {
+    background-color: #ffffff;
+    padding: 60px 20px;
+}
+
+.contact .container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+button[type="submit"] {
+    background-color: #00bcd4;
+    padding: 15px 30px;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0097a7;
+}
+
+/* Footer */
+footer {
+    background-color: #00627b;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer p {

@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canlı Yayın - Bilgisayar</title>
+  <title>Telefon Kamerasından Yayın</title>
   <style>
-    body {
-      text-align: center;
-      padding: 20px;
-    }
     video {
       width: 100%;
       max-width: 500px;
@@ -24,30 +20,33 @@
     const videoElement = document.getElementById('video');
     const peerConnection = new RTCPeerConnection();
 
-    // WebRTC bağlantısı kurmak için sinyal verisi alınacak
-    // Örneğin, telefon tarafından gönderilen "offer" burada alınacak
-    const offer = {/* Telefon tarafından gönderilen offer objesi burada olmalı */};
+    // Telefon tarafından gönderilen "offer" burada alınacak
+    const offerInput = prompt("Telefon tarafından gönderilen offer mesajını buraya yapıştırın:");
+    const offer = JSON.parse(offerInput);
 
+    // Offer'ı al ve bağlantıyı kur
     peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
       .then(() => peerConnection.createAnswer())
       .then(answer => peerConnection.setLocalDescription(answer))
       .then(() => {
-        // WebRTC sinyalini telefon tarafına gönder
-        console.log("WebRTC Answer gönderildi.");
+        // Answer'ı telefon tarafına gönder
+        alert("Answer mesajı oluşturuldu. Lütfen telefon tarafına kopyalayıp yapıştırın.");
+        console.log("Answer mesajı: ", peerConnection.localDescription);
       });
 
+    // Video akışını göster
     peerConnection.ontrack = (event) => {
-      // Telefonun kamerasından gelen görüntü
       videoElement.srcObject = event.streams[0];
     };
 
     peerConnection.onicecandidate = (event) => {
       if (event.candidate) {
         console.log("ICE Candidate: ", event.candidate);
-        // ICE Candidate bilgisini telefona gönder
+        // ICE Candidate bilgisini telefon tarafına gönder
       }
     };
   </script>
 </body>
 </html>
+
 
